@@ -23,11 +23,15 @@ Follow the README installation block, then: Compare category margin, monthly rev
 
 ## Five interview questions
 
-1. **What problem does this project solve, and what is its unit of work?** Explain find product and return patterns with sql, identify retail analysts as the audience, and trace one concrete example through the files above. Use the demonstration output rather than hypothetical impact.
-2. **Why did you choose the first design decision?** Keep order-line grain explicit and validate order-level fields before aggregation. Show the corresponding implementation and a test that would fail if that property were removed.
-3. **How do you protect correctness when inputs or execution change?** Represent money in integer cents and reverse returned lines consistently. Explain the relevant invalid-input or edge-case test and distinguish a checked property from an untested assumption.
-4. **How do you make results inspectable and reproducible?** Use reusable SQL files, including CTEs and window functions, with cross-report reconciliation tests. Point to actual outputs and recorded commands. Explain why a successful example is weaker evidence than a tested boundary or independently reconciled total.
-5. **What would you improve before real deployment or real-data use?** Synthetic six-month retail data. Simplified full-line returns, no shipping/tax/fees, no causal conclusions. Repeat-customer and cohort analyses use only the observed window and may misclassify pre-window customers. Choose one limitation, describe the missing evidence, and propose a measurable acceptance check rather than promising production readiness.
+1. **Why is the unit of analysis explicit?** Orders, order lines and customers have different grains. Joining them carelessly can duplicate revenue or overcount repeat customers, so SQL reports preserve and reconcile the intended grain.
+
+2. **How do returns affect margin?** Returned line values reverse the relevant revenue and cost contributions. Tests verify these adjustments and aggregate totals instead of treating every shipped line as retained revenue.
+
+3. **Why use integer cents?** Exact integer values keep monetary reconciliation stable. Formatting into currency is a presentation step, not the basis of the calculations.
+
+4. **What do the window queries add?** They calculate ordered running values and cohort-style comparisons without losing the underlying row context. They demonstrate analysis beyond simple group-by totals.
+
+5. **Can the report guide a real retailer?** Its findings describe a synthetic fixture. The business questions and SQL are reusable, but actual recommendations require validated real data and operating context.
 
 ## Independent exercise
 
@@ -41,6 +45,6 @@ The implementation was developed with substantial AI assistance under Abhijith V
 
 Suggested factual bullet after personally validating the demo:
 
-- Implemented and validated find product and return patterns with sql using SQLite · Python · Flask, with star schema and documented correctness checks and limitations.
+- Created eight SQLite business reports with order/line grain controls, return reversals and monetary reconciliation; published reproducible synthetic-data findings.
 
 Use [VERIFICATION.md](VERIFICATION.md) to add only measured numbers. Do not claim production traffic, users, savings, upstream acceptance or cloud deployment without corresponding evidence.
