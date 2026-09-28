@@ -1,0 +1,1 @@
+WITH o AS (SELECT order_id,SUM(quantity) units,COUNT(*) lines,SUM(net_revenue_cents)/100.0 revenue FROM facts GROUP BY order_id) SELECT COUNT(*) orders,ROUND(AVG(units),2) avg_units,ROUND(AVG(lines),2) avg_lines,ROUND(AVG(revenue),2) average_order_usd FROM o;

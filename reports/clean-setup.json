@@ -1,0 +1,9 @@
+{
+  "slug": "margin-ledger",
+  "fresh_venv": "work/clean-envs/margin-ledger",
+  "fresh_checkout": "work/clean/margin-ledger",
+  "passed": true,
+  "failure": null,
+  "runtime": "Python 3.12.14",
+  "model_training": null
+}

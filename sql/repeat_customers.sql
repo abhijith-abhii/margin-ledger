@@ -1,0 +1,1 @@
+WITH c AS (SELECT customer_id,COUNT(DISTINCT order_id) orders,SUM(net_revenue_cents)/100.0 revenue_usd FROM facts GROUP BY customer_id) SELECT CASE WHEN orders>1 THEN 'repeat' ELSE 'one-order' END segment,COUNT(*) customers,SUM(revenue_usd) revenue_usd FROM c GROUP BY segment;

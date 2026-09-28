@@ -1,0 +1,1 @@
+WITH c AS (SELECT customer_id,MIN(SUBSTR(date,1,7)) cohort FROM facts GROUP BY customer_id) SELECT c.cohort,SUBSTR(f.date,1,7) month,COUNT(DISTINCT f.customer_id) customers,SUM(f.net_revenue_cents)/100.0 revenue_usd FROM facts f JOIN c USING(customer_id) GROUP BY c.cohort,month ORDER BY c.cohort,month;

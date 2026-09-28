@@ -1,0 +1,38 @@
+{
+  "answer": "SELECT category,COUNT(*) line_count,SUM(net_revenue_cents)/100.0 revenue_usd,SUM(margin_cents)/100.0 margin_usd,ROUND(100.0*SUM(margin_cents)/NULLIF(SUM(net_revenue_cents),0),2) margin_pct FROM facts GROUP BY category ORDER BY margin_usd DESC;\n",
+  "details": {
+    "grain": "one product line within an order",
+    "report": "category_margin",
+    "source": "data/lines.csv"
+  },
+  "metrics": {
+    "customers": 147,
+    "margin_usd": 30110.42,
+    "orders": 500,
+    "revenue_usd": 81893.75
+  },
+  "notice": "Synthetic retail case. These queries describe observed order lines, not causal drivers. Returned lines fully reverse revenue/cost; shipping, tax and processing fees are excluded.",
+  "rows": [
+    {
+      "category": "Home",
+      "line_count": 417,
+      "margin_pct": 37.02,
+      "margin_usd": 10867.27,
+      "revenue_usd": 29353.75
+    },
+    {
+      "category": "Books",
+      "line_count": 437,
+      "margin_pct": 35.63,
+      "margin_usd": 9763.09,
+      "revenue_usd": 27398.75
+    },
+    {
+      "category": "Tech",
+      "line_count": 445,
+      "margin_pct": 37.71,
+      "margin_usd": 9480.06,
+      "revenue_usd": 25141.25
+    }
+  ]
+}

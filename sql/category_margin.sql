@@ -1,0 +1,1 @@
+SELECT category,COUNT(*) line_count,SUM(net_revenue_cents)/100.0 revenue_usd,SUM(margin_cents)/100.0 margin_usd,ROUND(100.0*SUM(margin_cents)/NULLIF(SUM(net_revenue_cents),0),2) margin_pct FROM facts GROUP BY category ORDER BY margin_usd DESC;

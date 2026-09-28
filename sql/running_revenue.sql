@@ -1,0 +1,1 @@
+WITH m AS (SELECT SUBSTR(date,1,7) month,SUM(net_revenue_cents)/100.0 revenue_usd FROM facts GROUP BY month) SELECT month,revenue_usd,SUM(revenue_usd) OVER(ORDER BY month) cumulative_usd FROM m ORDER BY month;
